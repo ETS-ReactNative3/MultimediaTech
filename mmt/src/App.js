@@ -9,6 +9,10 @@ import CreateWorker from './Components/CreateWorker';
 //import { Link } from 'react-router-dom';
 import * as routes from './Constants/Routes';
 import WorkerInfo from './Components/WorkerInfo';
+import Homepage from './Components/Homepage';
+import 'foundation-sites';
+import WorkerProfile from './Components/WorkerProfile';
+
 
 class App extends Component {
   render() {
@@ -28,17 +32,29 @@ class App extends Component {
             <NavBar />
             <br></br>
             <Route
+              exact path={routes.HOMEPAGE}
+              component={() => <Homepage />}
+            />
+            <Route
+              exact path={routes.BOOKING}
+              component={() => <Booking />}
+            />
+            <Route
+              exact path={routes.WORKER_PROFILE}
+              component={() => <WorkerProfile />}
+            />
+            <Route
               exact path={routes.CREATE_WORKER}
               component={() => <CreateWorker />}
             />
             <Route
-            exact paath={routes.WORKER_INFO}
-            component={() => <WorkerInfo/>}
+              exact path={routes.WORKER_INFO}
+              component={() => <WorkerInfo />}
             />
           </div>
         </Router>
         <br></br>
-        <Booking style={cardStyles} />
+        {/*<Booking style={cardStyles} />*/}
       </div>
     );
   }

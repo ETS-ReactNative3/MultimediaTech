@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import * as routes from '../Constants/Routes';
 import { Link } from 'react-router-dom';
+import WorkerInfo from './WorkerInfo';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -31,7 +35,7 @@ class CreateWorker extends Component {
             <div>
                 <div className="callout large">
                     <h5>This is a large callout</h5>
-                    <h4>Book a TV mount.</h4>
+                    <h4>Become a PRO</h4>
                     <form>
                         <div className="grid-container">
                             <div className="grid-x grid-padding-x">
@@ -82,6 +86,12 @@ class CreateWorker extends Component {
                             </div>
                         </div>
                     </form>
+                    <Router>
+                        <Route
+                            exact path={routes.WORKER_INFO}
+                            component={() => <WorkerInfo />}
+                        />
+                    </Router>
                     <Link to={routes.WORKER_INFO}>
                         <button className="hollow button" href="#" >Submit</button>
                     </Link>
