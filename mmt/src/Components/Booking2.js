@@ -35,10 +35,10 @@ class Booking2 extends Component {
             this.setState({
                 showReceipt: true
             });
-        }else {
+        } else {
             this.setState({
                 showReceipt: false
-            }); 
+            });
         }
     }
 
@@ -87,7 +87,7 @@ class Booking2 extends Component {
         //this.renderReceipt();
     }*/
 
-    calculator(){
+    calculator() {
         if (this.state.size === "33\" - 44\"") {
             price += 40;
         } else if (this.state.size === "45\" or larger") {
@@ -97,7 +97,7 @@ class Booking2 extends Component {
         if (this.state.takenDown === "yes") {
             price += 60;
         } //End taken down
-        
+
         if (this.state.wallMount === "fixed") {
             price += 30;
         } else if (this.state.wallMount === "tilting") {
@@ -120,7 +120,7 @@ class Booking2 extends Component {
         this.setState({
             price: price
         });
-        
+
         console.log("Price var: " + price);
 
         console.log("Price: " + this.state.price);
@@ -142,7 +142,7 @@ class Booking2 extends Component {
                     <div className="card-section">
                         <h4>TV Mounting</h4>
                         <label>How large is your TV?
-                                          <br></br>
+                            <br></br>
                             <div className="button-group">
                                 <a className="button" onClick={booking => this.setState(byPropKey('size', "Up to 32\""))}>Up to 32"</a>
                                 <a className="button 33" onClick={booking => this.setState(byPropKey('size', "33\" - 44\""))}>33" - 44"</a>
@@ -150,14 +150,14 @@ class Booking2 extends Component {
                             </div>
                         </label>
                         <label>Does your TV needs to be taken down?
-                                          <br></br>
+                            <br></br>
                             <div className="button-group">
                                 <a className="button" onClick={booking => this.setState(byPropKey('takenDown', "no"))}>No</a>
-                                <a className="button taken yes" onClick={booking => this.setState(byPropKey('takenDown', "yes")) }>Yes</a>
+                                <a className="button taken yes" onClick={booking => this.setState(byPropKey('takenDown', "yes"))}>Yes</a>
                             </div>
                         </label>
                         <label>Do you need a wall mount for your TV?
-                                          <br></br>
+                            <br></br>
                             <div className="button-group">
                                 <a className="button" onClick={booking => this.setState(byPropKey('wallMount', "no"))}>I already have one</a>
                                 <a className="button" onClick={booking => this.setState(byPropKey('wallMount', "fixed"))}>Fixed</a>
@@ -166,7 +166,7 @@ class Booking2 extends Component {
                             </div>
                         </label>
                         <label>What type of wall will your TV be mounted on?
-                                          <br></br>
+                            <br></br>
                             <div className="button-group">
                                 <a className="button" onClick={booking => this.setState(byPropKey('wallType', "Drywall, Plaster or Wood"))}>Drywall, Plaster, or Wood</a>
                                 <a className="button" onClick={booking => this.setState(byPropKey('wallType', "Brick or concrete"))}>Brick or Concrete</a>
@@ -174,14 +174,14 @@ class Booking2 extends Component {
                             </div>
                         </label>
                         <label>How should we handle the cords?
-                                          <br></br>
+                            <br></br>
                             <div className="button-group">
                                 <a className="button" onClick={booking => this.setState(byPropKey('cords', "as is"))}>Leave as is</a>
                                 <a className="button" onClick={booking => this.setState(byPropKey('cords', "bundle \& cover"))}>Bundle & Conver</a>
                             </div>
                         </label>
                         <label>Do you have external devices to connect?
-                                          <br></br>
+                            <br></br>
                             <div className="button-group">
                                 <a className="button" onClick={booking => this.setState(byPropKey('externalDevices', "no"))}>No devices</a>
                                 <a className="button" onClick={booking => this.setState(byPropKey('externalDevices', "one or more devices"))}>One or more devices</a>

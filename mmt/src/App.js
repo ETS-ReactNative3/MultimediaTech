@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Booking from './Components/Booking';
+import NavBar from './Components/NavBar';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+//import { CREATE_WORKER } from './Constants/Routes';
+import CreateWorker from './Components/CreateWorker';
+//import { Link } from 'react-router-dom';
+import * as routes from './Constants/Routes';
+import WorkerInfo from './Components/WorkerInfo';
 
 class App extends Component {
   render() {
@@ -16,7 +23,22 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <Booking style={cardStyles}/>
+        <Router>
+          <div>
+            <NavBar />
+            <br></br>
+            <Route
+              exact path={routes.CREATE_WORKER}
+              component={() => <CreateWorker />}
+            />
+            <Route
+            exact paath={routes.WORKER_INFO}
+            component={() => <WorkerInfo/>}
+            />
+          </div>
+        </Router>
+        <br></br>
+        <Booking style={cardStyles} />
       </div>
     );
   }

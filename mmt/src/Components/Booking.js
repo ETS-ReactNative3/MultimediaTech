@@ -102,7 +102,7 @@ class Booking extends Component {
                 <div className="card float-center" style={{ width: 600 }}>
                     <div className="card-divider">
                         TV Mount
-                </div>
+                    </div>
                     <div className="card-section">
                         <h4>Book a TV mount.</h4>
                         <Moment>{now}</Moment>
