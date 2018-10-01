@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import 'foundation-sites';
 import './WorkerProfile.css';
 import * as firebase from 'firebase';
+import ReactModal from 'react-modal';
+import BookingInfo from './BookingInfo';
 
 
 const byPropKey = (propertyName, value) => () => ({
@@ -16,12 +18,23 @@ class WorkerProfile extends Component {
             uEmail: '',
             serviceType: '',
             date: '',
+            showModal: false,
         }
         this.getProfile = this.getProfile.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
     }
 
     componentDidMount() {
         this.getProfile();
+    }
+
+    handleOpenModal(){
+        this.setState({ showModal: true });
+    }
+
+    handleCloseModal(){
+        this.setState({ showModal: false });
     }
 
     getProfile() {
@@ -55,6 +68,19 @@ class WorkerProfile extends Component {
         } = this.state;
         return (
             <div className="grid-x align-center" id='grid'>
+                <ReactModal
+                isOpen={this.state.showModal}
+                contentLabel="onRequestClose Example"
+                onRequestClose={this.handleCloseModal}
+                className="Modal"
+                overlayClassName="Overlay"
+                >
+                    <div id="heading-modal">
+                        <div id="modal-detail"></div>
+                        <BookingInfo/>
+                        <button className="hollow button" id="close-button" onClick={this.handleCloseModal}><span uk-icon="close"></span>Close</button>
+                    </div>
+                </ReactModal>
                 <div className="cell small-4" id="workerProf">
                     <br></br>
                     <br></br>
@@ -104,7 +130,7 @@ class WorkerProfile extends Component {
                                 />
                             </label>
                         </div>
-                        <button className="hollow button" href="#">Book</button>
+                        <button className="hollow button" href="#" onClick={this.handleOpenModal}>Book</button>
                     </div>
                 </div>
             </div >

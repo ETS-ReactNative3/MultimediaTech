@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import 'foundation-sites';
 import { Link } from 'react-router-dom';
 import * as routes from '../Constants/Routes';
+import './NavBar.css';
 
 const NavBar = () =>
     <div className="top-bar">
         <div className="top-bar-left">
-            <ul className="dropdown menu" data-dropdown-menu>
+            <ul className="dropdown menu" id="menu" data-dropdown-menu>
                 <li>
                     <Link to={routes.HOMEPAGE}>
                         <li className="menu-text">Multimedia Tech</li>
@@ -29,12 +30,11 @@ const NavBar = () =>
                 </li>
             </ul>
         </div>
-        <div className="top-bar-right">
-            <ul className="menu">
+        <div className="top-bar-right" >
+            <ul className="menu" id="right">
                 <li>
                     <Link to={routes.CREATE_WORKER}>
-                        Become a worker
-                    {/*<a href="#0" >Become a worker</a>*/}
+                        <a href="#0" >Become a worker</a>
                     </Link>
                 </li>
                 <li><button type="button" className="button">Search</button></li>

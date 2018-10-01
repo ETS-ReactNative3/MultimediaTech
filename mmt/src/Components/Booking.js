@@ -4,9 +4,8 @@ import $ from 'jquery';
 import * as firebase from 'firebase';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import Booking2 from './Booking2.js';
+import BookingInfo from './BookingInfo.js';
 //import Receipt from './Receipt.js';
-
 
 
 const byPropKey = (propertyName, value) => () => ({
@@ -26,11 +25,11 @@ class Booking extends Component {
             uZip: '',
             numberTV: 0,
             date: '',
-            showBooking2: false,
+            showBookingInfo: false,
         }
         this.addBooking = this.addBooking.bind(this);
         //this.changeTVs = this.changeTVs.bind(this);
-        this.renderBooking2 = this.renderBooking2.bind(this);
+        this.renderBookingInfo = this.renderBookingInfo.bind(this);
         //this.functions = this.functions.bind(this);
 
     }
@@ -39,15 +38,15 @@ class Booking extends Component {
         $(document).foundation();
     }
 
-    renderBooking2() {
+    renderBookingInfo() {
         alert("render");
-        if (this.state.showBooking2 === false) {
+        if (this.state.showBookingInfo === false) {
             this.setState({
-                showBooking2: true
+                showBookingInfo: true
             });
         } else {
             this.setState({
-                showBooking2: false
+                showBookingInfo: false
             });
         }
     }
@@ -68,7 +67,7 @@ class Booking extends Component {
 
     /*functions() {
         this.addBooking();
-        this.renderBooking2();
+        this.renderBookingInfo();
     }*/
 
 
@@ -96,7 +95,6 @@ class Booking extends Component {
             date,
             //numberTV,
         } = this.state;
-
         return (
             <div className="Booking">
                 <div className="card float-center" style={{ width: 600 }}>
@@ -110,7 +108,6 @@ class Booking extends Component {
                             <div className="grid-container">
                                 <div className="grid-x grid-padding-x">
                                     <div className="medium-6 cell">
-
                                         <label>First Name
                                         <input id="firstName"
                                                 type="text"
@@ -128,19 +125,16 @@ class Booking extends Component {
                                                 value={uLName}
                                                 onChange={booking => this.setState(byPropKey('uLName', booking.target.value))}
                                             />
-
                                         </label>
                                     </div>
                                     <div className="medium-6 cell">
                                         <label>Email
-
                                         <input id="email"
                                                 type="text"
                                                 placeholder=".medium-6.cell"
                                                 value={uEmail}
                                                 onChange={booking => this.setState(byPropKey('uEmail', booking.target.value))}
                                             />
-
                                         </label>
                                     </div>
                                     <div className="medium-6 cell">
@@ -154,20 +148,17 @@ class Booking extends Component {
                                         </label>
                                     </div>
                                     <div className="medium-6 cell">
-
                                         <label>Installation date
                                             <input id="zip"
                                                 type="date"
                                                 value={date}
                                                 onChange={booking => this.setState(byPropKey('date', booking.target.value))}
                                             />
-
                                         </label>
                                     </div>
                                     <div className="medium-6 cell">
-
                                         <label>Number of TVs
-                                          <br></br>
+                                        <br></br>
                                             <div className="button-group">
                                                 <a className="button" onClick={booking => this.setState(byPropKey('numberTV', 1))}>One</a>
                                                 <a className="button" onClick={booking => this.setState(byPropKey('numberTV', 2))}>Two</a>
@@ -178,10 +169,10 @@ class Booking extends Component {
                                 </div>
                             </div>
                         </form>
-                        <button className="hollow button" href="#" onClick={this.renderBooking2}>Submit</button>
+                        <button className="hollow button" href="#" onClick={this.renderBookingInfo}>Submit</button>
                     </div>
                 </div>
-                        {this.state.showBooking2 ? <Booking2 /> : null}
+                        {this.state.showBookingInfo ? <BookingInfo /> : null}
             </div>
         );
     }

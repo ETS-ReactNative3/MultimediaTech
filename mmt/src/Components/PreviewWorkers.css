@@ -1,0 +1,15 @@
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow:  2vmin 2vmin  10vmin rgba(75, 75, 75, 0.308);
+}
+
+.images {
+    /*border-radius: 100%;*/
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.callout{
+    border: none;
+}

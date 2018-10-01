@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import 'foundation-sites';
+import './PreviewWorkers.css';
 
 class PreviewWorkers extends Component {
 
@@ -9,14 +10,13 @@ class PreviewWorkers extends Component {
         this.getWorkers = this.getWorkers.bind(this);
     }
     
-
     componentDidMount(){
         this.getWorkers();
     }
 
     getWorkers(){
         var workers = firebase.database().ref().child("Workers");
-        var print = document.getElementById("showWorkers");
+        var print = document.getElementById("callout");
 
         workers.on("child_added", snap => {
             //Get info from database
@@ -25,16 +25,18 @@ class PreviewWorkers extends Component {
             var wCity = snap.child("City").val();
 
             var parent = document.createElement('div');
-            parent.className = "w3-button w3-round-xlarge zoom";
+            parent.className = "main";
             var card = document.createElement('div');
             card.setAttribute("id", "worker");
             card.setAttribute("class", "card");
 
             //Might not work
             card.setAttribute("style", "width: 300px;")
+
             //---------------
 
             var image = document.createElement('img');
+            image.className = "images";
             image.setAttribute("src", "https://images.unsplash.com/photo-1538102894545-170c37b51c3d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e8118f51819521b487bd264308d18667&auto=format&fit=crop&w=300&q=60 300w")
             var fName = document.createElement('h1');
             card.appendChild(image);
@@ -64,7 +66,7 @@ class PreviewWorkers extends Component {
 
     render() {
         return (
-            <div id='showWorkers'>
+            <div className='callout large' id="callout">
                 
             </div>
         );
