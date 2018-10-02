@@ -37,7 +37,11 @@ const NavBar = () =>
                         <a href="#0" >Become a worker</a>
                     </Link>
                 </li>
-                <li><button type="button" className="button">Search</button></li>
+                <li>
+                    <Link to={routes.SIGN_IN}>
+                        <a>Sign in</a>
+                    </Link>
+                </li>
             </ul>
         </div>
     </div>

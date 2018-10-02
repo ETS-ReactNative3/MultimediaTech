@@ -12,6 +12,8 @@ import WorkerInfo from './Components/WorkerInfo';
 import Homepage from './Components/Homepage';
 import 'foundation-sites';
 import WorkerProfile from './Components/WorkerProfile';
+import SignInPage from './Components/SignInPage';
+import SignUpPage from './Components/SignUpPage';
 
 
 class App extends Component {
@@ -30,7 +32,7 @@ class App extends Component {
         <Router>
           <div>
             <NavBar />
-            <br></br>
+
             <Route
               exact path={routes.HOMEPAGE}
               component={() => <Homepage />}
@@ -50,6 +52,14 @@ class App extends Component {
             <Route
               exact path={routes.WORKER_INFO}
               component={() => <WorkerInfo />}
+            />
+            <Route
+              exact path={routes.SIGN_IN}
+              component={() => <SignInPage />}
+            />
+            <Route
+              exact path={routes.SIGN_UP}
+              component={() => <SignUpPage />}
             />
           </div>
         </Router>
