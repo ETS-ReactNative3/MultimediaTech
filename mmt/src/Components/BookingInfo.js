@@ -11,6 +11,8 @@ var price = 80;
 
 const image = "https://images.unsplash.com/photo-1537914675540-ec9f82fbd752?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8f577e49d7737b80e76e2715fdfb1a93&auto=format&fit=crop&w=716&q=80"
 
+
+
 class BookingInfo extends Component {
     constructor(props) {
         super(props);
@@ -23,10 +25,51 @@ class BookingInfo extends Component {
             externalDevices: 'no',
             price: 80,
             showReceipt: false,
+            fName: "",
+            lName: "",
+            uEmail: "",
+            uZip: "",
+            numberTV: "0",
+            date: "",
         }
         this.calculator = this.calculator.bind(this);
         this.renderReceipt = this.renderReceipt.bind(this);
         this.reDraw = this.reDraw.bind(this);
+        this.addBooking = this.addBooking.bind(this);
+    }
+
+    addBooking() {
+        var bookingRef = firebase.database().ref().child("Reservations");
+        var key = bookingRef.push().getKey();
+        bookingRef.child(key).set({
+            "First Name": this.state.fName,
+            "Last Name": this.state.lName,
+            "Email": this.state.uEmail,
+            "Address": this.state.uZip,
+            "Number of TVs": this.state.numberTV,
+            "Size": this.state.size,
+            "Taken Down": this.state.takenDown,
+            "Wall Mount": this.state.wallMount,
+            "Wall type": this.state.wallType,
+            "Cords": this.state.cords,
+            "External Devices": this.state.externalDevices,
+            "Price": this.state.price,
+            "Date": this.state.date,
+        })
+        alert("add");
+    }
+
+    componentDidMount() {
+        //BookingInfoState();
+        this.setState({
+            fName: this.props.firstName,
+            lName: this.props.lastName,
+            uEmail: this.props.email,
+            uZip: this.props.zip,
+            numberTV: this.props.numberTV,
+            date: this.props.date,
+        })
+        console.log("Name: " + this.state.fName + " " + this.state.lName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip);
     }
 
     renderReceipt() {
@@ -87,7 +130,8 @@ class BookingInfo extends Component {
         //this.renderReceipt();
     }*/
 
-    reDraw(){
+    reDraw() {
+        document.getElementById("receiptDiv").innerHTML = "";
         var rDiv = document.getElementById("receiptDiv");
         //rDiv.innerHTML("");
         var receipt = document.createElement('div');
@@ -104,6 +148,7 @@ class BookingInfo extends Component {
         cardSection.appendChild(yourP);
         var button = document.createElement('button');
         button.className = "hollow button";
+        //button.setAttribute("onClick", );
         button.appendChild(document.createTextNode("Continue"));
         button.createTextNode = "contine";
 
@@ -216,6 +261,7 @@ class BookingInfo extends Component {
                                 </div>
                             </label>
                             <button className="hollow button" href="#" onClick={this.calculator}>Calculator</button>
+                            <button className="hollow button" href="#" onClick={this.addBooking}>Book</button>
                         </div>
 
                     </div>
@@ -224,6 +270,7 @@ class BookingInfo extends Component {
                     {/*<Receipt price={this.state.price}/>*/}
                 </div>
                 {/*{this.state.showReceipt ? <Receipt price={this.state.price} /> : null}*/}
+                {console.log("Name: " + this.state.fName + " " + this.state.lName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
             </div>
         );
     }

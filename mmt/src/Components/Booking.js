@@ -23,11 +23,11 @@ class Booking extends Component {
             uLName: '',
             uEmail: '',
             uZip: '',
-            numberTV: 0,
+            numberTV: 1,
             date: '',
             showBookingInfo: false,
         }
-        this.addBooking = this.addBooking.bind(this);
+        //this.addBooking = this.addBooking.bind(this);
         //this.changeTVs = this.changeTVs.bind(this);
         this.renderBookingInfo = this.renderBookingInfo.bind(this);
         //this.functions = this.functions.bind(this);
@@ -51,19 +51,7 @@ class Booking extends Component {
         }
     }
 
-    addBooking() {
-        var bookingRef = firebase.database().ref().child("Reservations");
-        var key = bookingRef.push().getKey();
 
-        bookingRef.child(key).set({
-            "First Name": this.state.uFName,
-            "Last Name": this.state.uLName,
-            "Email": this.state.uEmail,
-            "Address": this.state.uZip,
-            "Number of TVs": this.state.numberTV,
-        })
-        alert("add");
-    }
 
     /*functions() {
         this.addBooking();
@@ -149,7 +137,7 @@ class Booking extends Component {
                                     </div>
                                     <div className="medium-6 cell">
                                         <label>Installation date
-                                            <input id="zip"
+                                            <input id="date"
                                                 type="date"
                                                 value={date}
                                                 onChange={booking => this.setState(byPropKey('date', booking.target.value))}
@@ -172,7 +160,14 @@ class Booking extends Component {
                         <button className="hollow button" href="#" onClick={this.renderBookingInfo}>Submit</button>
                     </div>
                 </div>
-                        {this.state.showBookingInfo ? <BookingInfo /> : null}
+                        {console.log("Name: " + this.state.uFName + " " + this.state.uLName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
+                        {this.state.showBookingInfo ? <BookingInfo firstName={this.state.uFName} 
+                        lastName={this.state.uLName} 
+                        email={this.state.uEmail} 
+                        zip={this.state.uZip} 
+                        numberTV={this.state.numberTV}
+                        date={this.state.date}
+                        /> : null}
             </div>
         );
     }

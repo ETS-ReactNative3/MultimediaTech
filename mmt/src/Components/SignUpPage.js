@@ -5,7 +5,11 @@ import './SignUp.css';
 import * as routes from '../Constants/Routes';
 import * as firebase from 'firebase';
 import 'firebase/auth';
+import 'moment-timezone';
 
+
+var moment = require('moment');
+var now = moment().format('MMMM Do YYYY');
 
 const SignUpPage = ({ history }) =>
     <div id="sign-up-div">
@@ -54,7 +58,8 @@ class SignUpForm extends Component {
     onClick = (event) => {
         const {
             username,
-            fullname,
+            fName,
+            lName,
             telephone,
             email,
             passwordOne,
@@ -75,18 +80,17 @@ class SignUpForm extends Component {
             if (user) {
                 var userId = firebase.auth().currentUser.uid;
                 var ref = firebase.database().ref().child("Users");
-
                 var key = ref.push().getKey();
                 ref.child(userId).set({
                     "Username": username,
-                    "Nombre": fullname,
+                    "Name": fName,
+                    "Last Name": lName,
                     "Email": email,
                     "Telephone": telephone,
                     "Password": passwordOne,
                     "Key": userId,
-                    "Amigos": {
-                    }
-
+                    "Since": now,
+                    "Worker": null,
                 });
             }
         });
@@ -98,7 +102,8 @@ class SignUpForm extends Component {
     render() {
         const {
             username,
-            fullname,
+            fName,
+            lName,
             email,
             telephone,
             passwordOne,
@@ -125,10 +130,18 @@ class SignUpForm extends Component {
                             type="text"
                             placeholder="Username"
                             />
-                        <label className="labels">Full Name</label>
+                        <label className="labels">First Name</label>
                             <input className="inputs" id="sign-up-input"
-                                value={fullname}
-                                onChange={event => this.setState(byPropKey('fullname', event.target.value))}
+                                value={fName}
+                                onChange={event => this.setState(byPropKey('fName', event.target.value))}
+                                type="text"
+                                placeholder="Full Name"
+                            />
+                        
+                        <label className="labels">Last Name</label>
+                            <input className="inputs" id="sign-up-input"
+                                value={lName}
+                                onChange={event => this.setState(byPropKey('lName', event.target.value))}
                                 type="text"
                                 placeholder="Full Name"
                             />

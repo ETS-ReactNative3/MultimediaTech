@@ -14,9 +14,27 @@ import 'foundation-sites';
 import WorkerProfile from './Components/WorkerProfile';
 import SignInPage from './Components/SignInPage';
 import SignUpPage from './Components/SignUpPage';
+import * as firebase from 'firebase';
+import UserProfile from './Components/UserProfile';
+import WorkerHomepage from './Components/WorkerHomepage';
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      authUser: null,
+    }
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(authUser => {
+      authUser ? this.setState(() => ({ authUser }))
+        : this.setState(() => ({ authUser: null }));
+    })
+  }
+
+
   render() {
     var cardStyles = {
       width: '250px',
@@ -31,7 +49,7 @@ class App extends Component {
         </header>
         <Router>
           <div>
-            <NavBar />
+            <NavBar authUser={this.state.authUser} />
 
             <Route
               exact path={routes.HOMEPAGE}
@@ -60,6 +78,14 @@ class App extends Component {
             <Route
               exact path={routes.SIGN_UP}
               component={() => <SignUpPage />}
+            />
+            <Route
+              exact path={routes.USER_PROFILE}
+              component={() => <UserProfile authUser={this.state.authUser} />}
+            />
+            <Route
+              exact path={routes.WORKER_HOMEPAGE}
+              component={() => <WorkerHomepage authUser={this.state.authUser} />}
             />
           </div>
         </Router>
