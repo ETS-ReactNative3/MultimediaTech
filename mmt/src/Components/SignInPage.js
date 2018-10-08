@@ -85,7 +85,7 @@ class SignIn extends Component {
                                 onChange={event => this.setState(byPropKey('uPassword', event.target.value))}
                             />
                         </label>
-                        <button id='signInButton' className="hollow button">Sign In</button>
+                        <button id='signInButton' className="hollow button" onClick={this.submit}>Sign In</button>
                         <Link to={routes.SIGN_UP}>
                             <button id='signUpButton' className="button">Sign Up</button>
                         </Link>

@@ -4,6 +4,7 @@ import './WorkerProfile.css';
 import * as firebase from 'firebase';
 import ReactModal from 'react-modal';
 import BookingInfo from './BookingInfo';
+import BookWorker from './BookWorker';
 
 
 const byPropKey = (propertyName, value) => () => ({
@@ -77,7 +78,7 @@ class WorkerProfile extends Component {
                 >
                     <div id="heading-modal">
                         <div id="modal-detail"></div>
-                        <BookingInfo/>
+                        <BookWorker/>
                         <button className="hollow button" id="close-button" onClick={this.handleCloseModal}><span uk-icon="close"></span>Close</button>
                     </div>
                 </ReactModal>
@@ -100,7 +101,7 @@ class WorkerProfile extends Component {
                             <label>Zip Code
                                 <input id="zip"
                                     type="text"
-                                    placeholder=".medium-6.cell"
+                                    placeholder="Zip code"
                                     value={uZip}
                                     onChange={booking => this.setState(byPropKey('uZip', booking.target.value))}
                                 />
@@ -108,7 +109,7 @@ class WorkerProfile extends Component {
                             <label>Type of Service
                                 <input id="serviceType"
                                     type="text"
-                                    placeholder=".medium-6.cell"
+                                    placeholder="Service"
                                     value={serviceType}
                                     onChange={booking => this.setState(byPropKey('uZip', booking.target.value))}
                                 />
@@ -116,7 +117,7 @@ class WorkerProfile extends Component {
                             <label>Email
                                 <input id="email"
                                     type="text"
-                                    placeholder=".medium-6.cell"
+                                    placeholder="Email"
                                     value={uEmail}
                                     onChange={booking => this.setState(byPropKey('uEmail', booking.target.value))}
                                 />
@@ -124,7 +125,7 @@ class WorkerProfile extends Component {
                             <label>Date
                                 <input id="date"
                                     type="date"
-                                    placeholder=".medium-6.cell"
+                                    placeholder=""
                                     value={date}
                                     onChange={booking => this.setState(byPropKey('date', booking.target.value))}
                                 />

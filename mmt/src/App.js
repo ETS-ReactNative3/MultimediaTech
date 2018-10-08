@@ -17,7 +17,9 @@ import SignUpPage from './Components/SignUpPage';
 import * as firebase from 'firebase';
 import UserProfile from './Components/UserProfile';
 import WorkerHomepage from './Components/WorkerHomepage';
+import $ from 'jquery';
 
+$(document).foundation();
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    $(document).foundation();
     firebase.auth().onAuthStateChanged(authUser => {
       authUser ? this.setState(() => ({ authUser }))
         : this.setState(() => ({ authUser: null }));

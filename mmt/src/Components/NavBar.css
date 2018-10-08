@@ -1,4 +1,8 @@
-.top-bar{
+#nav{
+    background-color: white;
+}
+
+#right{
     background-color: white;
 }
 
@@ -6,6 +10,12 @@
     background-color: white;
 }
 
-#right{
-    background-color: white;
+
+#prof{
+    
+    color: blue;
+}
+
+#bt-logout{
+    color: blue;
 }
