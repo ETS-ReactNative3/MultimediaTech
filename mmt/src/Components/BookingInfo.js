@@ -3,6 +3,7 @@ import 'foundation-sites';
 import $ from 'jquery';
 import * as firebase from 'firebase';
 import 'moment-timezone';
+import './BookingInfo.css';
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -204,73 +205,74 @@ class BookingInfo extends Component {
 
     render() {
         return (
-            <div className="grid-x grid-padding-x" id='grid'>
-                {/*<Receipt size={this.state.size} takenDown={this.state.takenDown} wallMount={this.state.wallMount} wallType={this.state.wallType} cords={this.state.cords} externalDevices={this.state.externalDevices}/>*/}
-                <div className="cell medium-6 large-8">
-                    <div className="card float-center" style={{ width: 600 }}>
-                        <div className="card-divider">
-                            Your TV Mounting
+            <div>
+                <h4 id="title">TV Mounting</h4>
+                <div className="grid-container" id='grid'>
+                    {/*<Receipt size={this.state.size} takenDown={this.state.takenDown} wallMount={this.state.wallMount} wallType={this.state.wallType} cords={this.state.cords} externalDevices={this.state.externalDevices}/>*/}
+                    <div className="grid-x grid-padding-x">
+                        <div id="cell" className="cell small-6">
+                            <label id="subs">How large is your TV?
+                            <br></br>
+                                <div className="button-group">
+                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('size', "Up to 32\""))}>Up to 32"</a>
+                                    <a id="buttonsInfo" className="button 33" price="40" onClick={booking => this.setState(byPropKey('size', "33\" - 44\""))}>33" - 44"</a>
+                                    <a id="buttonsInfo" className="button 45" price="80" onClick={booking => this.setState(byPropKey('size', "45\" or larger"))}>45" or larger</a>
+                                </div>
+                            </label>
                         </div>
-                        <img src={image} />
-                        <div className="card-section">
-                            <h4>TV Mounting</h4>
-                            <label>How large is your TV?
+                        <div className="cell small-6">
+                            <label id="subs">Does your TV needs to be taken down?
                             <br></br>
                                 <div className="button-group">
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('size', "Up to 32\""))}>Up to 32"</a>
-                                    <a className="button 33" price="40" onClick={booking => this.setState(byPropKey('size', "33\" - 44\""))}>33" - 44"</a>
-                                    <a className="button 45" price="80" onClick={booking => this.setState(byPropKey('size', "45\" or larger"))}>45" or larger</a>
+                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('takenDown', "no"))}>No</a>
+                                    <a id="buttonsInfo" className="button taken yes" price="60" onClick={booking => this.setState(byPropKey('takenDown', "yes"))}>Yes</a>
                                 </div>
                             </label>
-                            <label>Does your TV needs to be taken down?
-                            <br></br>
-                                <div className="button-group">
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('takenDown', "no"))}>No</a>
-                                    <a className="button taken yes" price="60" onClick={booking => this.setState(byPropKey('takenDown', "yes"))}>Yes</a>
-                                </div>
-                            </label>
-                            <label>Do you need a wall mount for your TV?
-                            <br></br>
-                                <div className="button-group">
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('wallMount', "no"))}>I already have one</a>
-                                    <a className="button" price="30" onClick={booking => this.setState(byPropKey('wallMount', "fixed"))}>Fixed</a>
-                                    <a className="button" price="40" onClick={booking => this.setState(byPropKey('wallMount', "tilting"))}>Tilting</a>
-                                    <a className="button" price="50" onClick={booking => this.setState(byPropKey('wallMount', "full motion"))}>Full Motion</a>
-                                </div>
-                            </label>
-                            <label>What type of wall will your TV be mounted on?
-                            <br></br>
-                                <div className="button-group">
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('wallType', "Drywall, Plaster or Wood"))}>Drywall, Plaster, or Wood</a>
-                                    <a className="button" price="35" onClick={booking => this.setState(byPropKey('wallType', "Brick or concrete"))}>Brick or Concrete</a>
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('wallType', "Doesn't know"))}>I don't know</a>
-                                </div>
-                            </label>
-                            <label>How should we handle the cords?
-                            <br></br>
-                                <div className="button-group">
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('cords', "as is"))}>Leave as is</a>
-                                    <a className="button" price="30" onClick={booking => this.setState(byPropKey('cords', "bundle \& cover"))}>Bundle & Conver</a>
-                                </div>
-                            </label>
-                            <label>Do you have external devices to connect?
-                            <br></br>
-                                <div className="button-group">
-                                    <a className="button" price="0" onClick={booking => this.setState(byPropKey('externalDevices', "no"))}>No devices</a>
-                                    <a className="button" price="15" onClick={booking => this.setState(byPropKey('externalDevices', "one or more devices"))}>One or more devices</a>
-                                </div>
-                            </label>
-                            <button className="hollow button" href="#" onClick={this.calculator}>Calculator</button>
-                            <button className="hollow button" href="#" onClick={this.addBooking}>Book</button>
                         </div>
-
+                        <div className="cell small-6">
+                            <label id="subs">Do you need a wall mount for your TV?
+                            <br></br>
+                                <div className="button-group">
+                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('wallMount', "no"))}>I already have one</a>
+                                    <a id="buttonsInfo" className="button" price="30" onClick={booking => this.setState(byPropKey('wallMount', "fixed"))}>Fixed</a>
+                                    <a id="buttonsInfo" className="button" price="40" onClick={booking => this.setState(byPropKey('wallMount', "tilting"))}>Tilting</a>
+                                    <a id="buttonsInfo" className="button" price="50" onClick={booking => this.setState(byPropKey('wallMount', "full motion"))}>Full Motion</a>
+                                </div>
+                            </label>
+                        </div>
+                        <div className="cell small-6">
+                            <label id="subs">What type of wall will your TV be mounted on?
+                            <br></br>
+                                <div className="button-group">
+                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('wallType', "Drywall, Plaster or Wood"))}>Drywall, Plaster, or Wood</a>
+                                    <a id="buttonsInfo" className="button" price="35" onClick={booking => this.setState(byPropKey('wallType', "Brick or concrete"))}>Brick or Concrete</a>
+                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('wallType', "Doesn't know"))}>I don't know</a>
+                                </div>
+                            </label>
+                        </div>
+                        <label id="subs">How should we handle the cords?
+                            <br></br>
+                            <div className="button-group">
+                                <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('cords', "as is"))}>Leave as is</a>
+                                <a id="buttonsInfo" className="button" price="30" onClick={booking => this.setState(byPropKey('cords', "bundle \& cover"))}>Bundle & Conver</a>
+                            </div>
+                        </label>
+                        <label id="subs">Do you have external devices to connect?
+                            <br></br>
+                            <div className="button-group">
+                                <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('externalDevices', "no"))}>No devices</a>
+                                <a id="buttonsInfo" className="button" price="15" onClick={booking => this.setState(byPropKey('externalDevices', "one or more devices"))}>One or more devices</a>
+                            </div>
+                        </label>
+                        <button className="hollow button" href="#" onClick={this.calculator}>Calculator</button>
+                        <button className="hollow button" href="#" onClick={this.addBooking}>Book</button>
+                        <div className="cell medium-6 large-4" id="receiptDiv">
+                            {/*<Receipt price={this.state.price}/>*/}
+                        </div>
                     </div>
-                </div>
-                <div className="cell medium-6 large-4" id="receiptDiv">
-                    {/*<Receipt price={this.state.price}/>*/}
-                </div>
-                {/*{this.state.showReceipt ? <Receipt price={this.state.price} /> : null}*/}
-                {console.log("Name: " + this.state.fName + " " + this.state.lName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
+                    {/*{this.state.showReceipt ? <Receipt price={this.state.price} /> : null}*/}
+                    {console.log("Name: " + this.state.fName + " " + this.state.lName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
+                </div >
             </div>
         );
     }

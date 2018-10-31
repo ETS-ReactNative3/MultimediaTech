@@ -17,6 +17,7 @@ import SignUpPage from './Components/SignUpPage';
 import * as firebase from 'firebase';
 import UserProfile from './Components/UserProfile';
 import WorkerHomepage from './Components/WorkerHomepage';
+import BookingInfo from './Components/BookingInfo';
 import $ from 'jquery';
 
 $(document).foundation();
@@ -46,10 +47,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
         <Router>
           <div>
             <NavBar authUser={this.state.authUser} />
@@ -89,6 +86,10 @@ class App extends Component {
             <Route
               exact path={routes.WORKER_HOMEPAGE}
               component={() => <WorkerHomepage authUser={this.state.authUser} />}
+            />
+            <Route
+              exact path={routes.BOOKING_INFO}
+              component={() => <BookingInfo />}
             />
           </div>
         </Router>

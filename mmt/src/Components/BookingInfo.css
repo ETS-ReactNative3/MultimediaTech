@@ -1,0 +1,42 @@
+#cell{
+    justify-content: left;
+}
+
+#buttonsInfo {
+    --margin-left: 0vmin;
+    margin-top: 2vmin;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 24px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.55);
+    width: 7vw;
+    height: 10vh;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.16);
+    
+}
+
+#title {
+    margin-top: 3vmin;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 60px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.79);
+    margin-left: 25vmin;
+    margin-top: 5vmin;
+    text-align: left;
+}
+
+#subs {
+    font-family: Montserrat;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 24px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.55);
+}

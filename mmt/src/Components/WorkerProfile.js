@@ -15,19 +15,25 @@ class WorkerProfile extends Component {
     constructor(props) {
         super(props);
         this.state ={
+            uName: '',
+            uCity: '',
             uZip: '',
             uEmail: '',
             serviceType: '',
             date: '',
             showModal: false,
         }
-        this.getProfile = this.getProfile.bind(this);
+        //this.getProfile = this.getProfile.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
     }
 
     componentDidMount() {
-        this.getProfile();
+        //this.getProfile();
+        this.setState({
+            uName: this.props.name,
+            uCity: this.props.city,
+        })
     }
 
     handleOpenModal(){
@@ -38,7 +44,7 @@ class WorkerProfile extends Component {
         this.setState({ showModal: false });
     }
 
-    getProfile() {
+    /*getProfile() {
         var profile = firebase.database().ref().child("Workers");
         var print = document.getElementById("workerProf")
         profile.on("child_added", snap => {
@@ -58,7 +64,7 @@ class WorkerProfile extends Component {
             print.appendChild(printName);
             print.appendChild(printCity);
         })
-    }
+    }*/
 
     render() {
         const {
@@ -85,8 +91,7 @@ class WorkerProfile extends Component {
                 <div className="cell small-4" id="workerProf">
                     <br></br>
                     <br></br>
-                    <br></br>
-                    <img src="http://pronksiapartments.ee/wp-content/uploads/2015/10/placeholder-face-big.png" />
+                    <img src="http://pronksiapartments.ee/wp-content/uploads/2015/10/placeholder-face-big.png" id="profImg" />
                 </div>
                 <div className="cell auto">
                     <br></br>

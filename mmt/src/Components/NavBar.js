@@ -63,7 +63,10 @@ const NavAuth = ({ authUser }) =>
         <Link to={routes.HOMEPAGE}>
             <a className="navbar-brand">Multimedia Tech</a>
         </Link>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav">
                 <li className="nav-item active">
                     <Link to={routes.BOOKING}>

@@ -8,3 +8,4 @@ export const SIGN_IN = '/SignInPage';
 export const SIGN_UP ='/SignUpPage';
 export const USER_PROFILE = '/UserProfile';
 export const WORKER_HOMEPAGE = '/WorkerHomepage';
+export const BOOKING_INFO = '/BookingInfo';

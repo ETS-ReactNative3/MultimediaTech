@@ -5,6 +5,9 @@ import * as firebase from 'firebase';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import BookingInfo from './BookingInfo.js';
+import './Booking.css';
+import { Link } from 'react-router-dom';
+import * as routes from '../Constants/Routes';
 //import Receipt from './Receipt.js';
 
 
@@ -85,89 +88,82 @@ class Booking extends Component {
         } = this.state;
         return (
             <div className="Booking">
-                <div className="card float-center" style={{ width: 600 }}>
-                    <div className="card-divider">
-                        TV Mount
-                    </div>
-                    <div className="card-section">
-                        <h4>Book a TV mount.</h4>
-                        <Moment>{now}</Moment>
-                        <form>
-                            <div className="grid-container">
-                                <div className="grid-x grid-padding-x">
-                                    <div className="medium-6 cell">
-                                        <label>First Name
-                                        <input id="firstName"
-                                                type="text"
-                                                placeholder="First Name"
-                                                value={uFName}
-                                                onChange={event => this.setState(byPropKey('uFName', event.target.value))}
-                                            />
-                                        </label>
-                                    </div>
-                                    <div className="medium-6 cell">
-                                        <label>Last Name
-                                    <input id="lastName"
-                                                type="text"
-                                                placeholder=".medium-6.cell"
-                                                value={uLName}
-                                                onChange={booking => this.setState(byPropKey('uLName', booking.target.value))}
-                                            />
-                                        </label>
-                                    </div>
-                                    <div className="medium-6 cell">
-                                        <label>Email
-                                        <input id="email"
-                                                type="text"
-                                                placeholder=".medium-6.cell"
-                                                value={uEmail}
-                                                onChange={booking => this.setState(byPropKey('uEmail', booking.target.value))}
-                                            />
-                                        </label>
-                                    </div>
-                                    <div className="medium-6 cell">
-                                        <label>Zip Code
-                                        <input id="zip"
-                                                type="text"
-                                                placeholder=".medium-6.cell"
-                                                value={uZip}
-                                                onChange={booking => this.setState(byPropKey('uZip', booking.target.value))}
-                                            />
-                                        </label>
-                                    </div>
-                                    <div className="medium-6 cell">
-                                        <label>Installation date
-                                            <input id="date"
-                                                type="date"
-                                                value={date}
-                                                onChange={booking => this.setState(byPropKey('date', booking.target.value))}
-                                            />
-                                        </label>
-                                    </div>
-                                    <div className="medium-6 cell">
-                                        <label>Number of TVs
-                                        <br></br>
-                                            <div className="button-group">
-                                                <a className="button" onClick={booking => this.setState(byPropKey('numberTV', 1))}>One</a>
-                                                <a className="button" onClick={booking => this.setState(byPropKey('numberTV', 2))}>Two</a>
-                                                <a className="button" onClick={booking => this.setState(byPropKey('numberTV', 3))}>Three</a>
-                                            </div>
-                                        </label>
-                                    </div>
+                <h1 id="quickInfo"> QUICK INFO</h1>
+                <Moment>{now}</Moment>
+                <form>
+                    <div className="grid-container">
+                        <div className="grid-x grid-padding-x">
+                            <div className="medium-6 cell">
+                                <input id="firstName"
+                                    className="inputs"
+                                    type="text"
+                                    placeholder="First Name"
+                                    value={uFName}
+                                    onChange={event => this.setState(byPropKey('uFName', event.target.value))}
+                                />
+                            </div>
+                            <div className="medium-6 cell">
+                                <input id="lastName"
+                                    className="inputs"
+                                    type="text"
+                                    placeholder="Last Name"
+                                    value={uLName}
+                                    onChange={booking => this.setState(byPropKey('uLName', booking.target.value))}
+                                />
+                            </div>
+                            <div className="medium-6 cell">
+                                <input id="email"
+                                    className="inputs"
+                                    type="text"
+                                    placeholder="Email"
+                                    value={uEmail}
+                                    onChange={booking => this.setState(byPropKey('uEmail', booking.target.value))}
+                                />
+                            </div>
+                            <div className="medium-6 cell">
+                                <input id="zip"
+                                    className="inputs"
+                                    type="text"
+                                    placeholder="Zip"
+                                    value={uZip}
+                                    onChange={booking => this.setState(byPropKey('uZip', booking.target.value))}
+                                />
+                            </div>
+                            <div className="medium-6 cell">
+                                <input id="date"
+                                    className="inputs"
+                                    type="date"
+                                    value={date}
+                                    onChange={booking => this.setState(byPropKey('date', booking.target.value))}
+                                />
+                            </div>
+                            <div className="medium-6 cell">
+                                <br></br>
+                                <div className="button-group">
+                                    <a id="buttons" className="button" onClick={booking => this.setState(byPropKey('numberTV', 1))}>1</a>
+                                    <a id="buttons" className="button" onClick={booking => this.setState(byPropKey('numberTV', 2))}>2</a>
+                                    <a id="buttons" className="button" onClick={booking => this.setState(byPropKey('numberTV', 3))}>3</a>
                                 </div>
                             </div>
-                        </form>
-                        <button className="hollow button" href="#" onClick={this.renderBookingInfo}>Submit</button>
+                            <div className="medium-6 cell">
+                                <Link to={routes.BOOKING_INFO}>
+                                    <button id="next" className="hollow button" href="#" onClick={this.renderBookingInfo}>Submit</button>
+                                </Link>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                        {console.log("Name: " + this.state.uFName + " " + this.state.uLName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
-                        {this.state.showBookingInfo ? <BookingInfo firstName={this.state.uFName} 
-                        lastName={this.state.uLName} 
-                        email={this.state.uEmail} 
-                        zip={this.state.uZip} 
+                </form>
+
+                {console.log("Name: " + this.state.uFName + " " + this.state.uLName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
+                {
+                    this.state.showBookingInfo ? <BookingInfo firstName={this.state.uFName}
+                        lastName={this.state.uLName}
+                        email={this.state.uEmail}
+                        zip={this.state.uZip}
                         numberTV={this.state.numberTV}
                         date={this.state.date}
-                        /> : null}
+                    /> : null
+                }
             </div>
         );
     }

@@ -1,15 +1,23 @@
-#sign-up-div {
+/*#sign-up-div {
     background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
     align-content: center;
-}
+}*/
 
 #callout {
-    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
     align-content: center;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.199);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    background: #f5f5f5;
+}
 
+#signIn {
+    font-family: Montserrat;
+    font-weight: normal;
+    font-size: 40px;
+    letter-spacing: 0.03em;
+    line-height: 24px;
+    text-align: center;
+    color: #000;
+    padding-top: 15vmin;
+    
 }
 
 #card {
@@ -17,15 +25,7 @@
     margin: 0px auto;
 }
 
-#main-title {
-    color: white;
-    /*font-family: montserrat black;*/
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-}
-
-#signInButton{
+#signInButton {
     border-radius: 20px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -33,7 +33,7 @@
     height: 50px;
 }
 
-#signUpButton{
+#signUpButton {
     border-radius: 20px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -42,10 +42,28 @@
     background-color: gray;
 }
 
-#signIn{
+#signIn {
     margin-top: 20px;
     letter-spacing: 5px;
     text-transform: uppercase;
     font-weight: 400;
     font-family: montserrat black;
+}
+
+#aboutTitle {
+    padding-top: 30%;
+}
+
+#dataSide {
+    background: #f5f5f5;
+}
+
+#dataSide{
+    
+}
+
+.cls-1{
+    position: fixed;
+    left: 0;
+    top: 0;
 }
