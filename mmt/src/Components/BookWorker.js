@@ -40,7 +40,7 @@ class BookWorker extends Component {
 
     addBooking() {
         //Get selected worker
-        var bookingRef = firebase.database().ref().child("Workers");
+        var bookingRef = firebase.database().ref().child("Users");
         //var key = bookingRef.push().getKey();
         var iteration = 0;
         bookingRef.once("value", (snapshot) => {

@@ -2,19 +2,78 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import './WorkerHomepage.css';
 import tv from '../Images/jens-kreuter-85328-unsplash.jpg';
+import ReactModal from 'react-modal';
 
+import MapContainer from "./GoogleMapsContainer";
+
+
+var authUser;
 
 class WorkerHomepage extends Component {
     constructor(props) {
         super(props);
         this.getBookings = this.getBookings.bind(this);
+        this.pickBooking = this.pickBooking.bind(this);
+        this.state = {
+            authUser: this.props.authUser,
+            showModal: false,
+            jobID: "",
+            longitude: "",
+            latitude: "",
+        }
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
     }
 
     componentDidMount() {
-        this.getBookings();
+        this.setState({
+            authUser: this.props.authUser,
+        });
+        authUser = this.state.authUser;
+        this.getBookings(authUser);
+        console.log("var: " + authUser);
+        console.log("state: " + this.state.authUser);
     }
 
-    getBookings() {
+    async handleOpenModal() {
+        var id = this.state.jobID;
+        var job = firebase.database().ref().child("Reservations").child(id);
+        var lon;
+        var lat;
+        await job.on("value", function (snap) {
+            lon = snap.child("Location").child("Longitude").val();
+            lat = snap.child("Location").child("Latitude").val();
+        })
+
+        await this.setState({
+            longitude: lon,
+            latitude: lat,
+        });
+        console.log("Var lon: " + lon + " lat: " + lat);
+        console.log("state lon: " + this.state.longitude + " lat " + this.state.latitude);
+        this.setState({
+            showModal: true,
+        });
+        console.log("Modal");
+    }
+
+    handleCloseModal() {
+        this.setState({ showModal: false });
+    }
+
+    pickBooking(authUser, id, address, tvs, price, date) {
+        var ref = firebase.database().ref().child("Users").child(authUser.uid).child("Jobs");
+        ref.set(id);
+        ref.child(id).set({
+            "id": id,
+            "address": address,
+            "tvs": tvs,
+            "price": price,
+            "date": date,
+        });
+    }
+
+    getBookings(authUser) {
         var bookings = firebase.database().ref().child("Reservations");
         var print = document.getElementById("callout");
 
@@ -28,6 +87,9 @@ class WorkerHomepage extends Component {
             var column2 = document.createElement("div");
             column2.className = "cell small-6";
 
+            var dbid = snap.child("id").val();
+            console.log("F DbID: " + dbid);
+
             var address = snap.child("Address").val();
             var tvs = snap.child("Number of TVs").val();
 
@@ -36,6 +98,7 @@ class WorkerHomepage extends Component {
 
             var card = document.createElement('div');
             card.setAttribute("class", "card");
+            card.id = "bookings";
             var image = document.createElement('img');
             image.className = "images";
             image.setAttribute("src", tv);
@@ -92,16 +155,25 @@ class WorkerHomepage extends Component {
 
             /*var printPrice = document.createElement('h1');
             printPrice.appendChild(document.createTextNode(price));*/
-            
+
             var detailsButton = document.createElement("button");
             detailsButton.appendChild(document.createTextNode("Details"));
-            detailsButton.setAttribute("class","button");
-            detailsButton.setAttribute("id","detailsButton");
+            detailsButton.setAttribute("class", "button");
+            detailsButton.setAttribute("id", "detailsButton");
+            detailsButton.onmouseover = () => {
+                this.setState({ "jobID": dbid });
+                console.log("dbid: " + dbid);
+                console.log("state: " + this.state.jobID);
+            }
+            detailsButton.onclick = this.handleOpenModal;
 
             var pickButton = document.createElement("button");
             pickButton.appendChild(document.createTextNode("Pick"));
-            pickButton.setAttribute("class","button");
-            pickButton.setAttribute("id","pickButton");
+            pickButton.setAttribute("class", "button");
+            pickButton.setAttribute("id", "pickButton");
+            //pickButton.setAttribute("dbid",);
+            //pickButton.setAttribute("onClick", this.pickBooking(authUser, dbid, address, tvs, price, date));
+            pickButton.onclick = () => { this.pickBooking(authUser, dbid, address, tvs, price, date) };
 
             column1.appendChild(printZipText);
             column1.appendChild(printAddress);
@@ -132,7 +204,6 @@ class WorkerHomepage extends Component {
             card.appendChild(printWallType);*/
             //card.appendChild(printPrice);
 
-            
 
             print.appendChild(card);
 
@@ -140,9 +211,34 @@ class WorkerHomepage extends Component {
     }
 
     render() {
+        const style = {
+            /*width: '50vw',
+            height: '75vh',*/
+            width: '30vw',
+            height: '85vh',
+            'marginLeft': 'auto',
+            'marginRight': 'auto'
+        }
+
         return (
-            <div className="content" id="callout">
-                
+            <div>
+                <div className="content" id="callout">
+                </div>
+                <ReactModal
+                    isOpen={this.state.showModal}
+                    contentLabel="onRequestClose Example"
+                    onRequestClose={this.handleCloseModal}
+                    className="Modal"
+                    overlayClassName="Overlay"
+                >
+                    <div id="heading-modal">
+                        <button className="hollow button" id="close-button" onClick={this.handleCloseModal}><span uk-icon="close"></span>Close</button>
+                        <MapContainer style={style} center={{
+                            lat: this.state.latitude,
+                            lng: this.state.longitude,
+                        }} />
+                    </div>
+                </ReactModal>
             </div>
         );
     }

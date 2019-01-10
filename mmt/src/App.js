@@ -20,7 +20,6 @@ import WorkerHomepage from './Components/WorkerHomepage';
 import BookingInfo from './Components/BookingInfo';
 import $ from 'jquery';
 
-$(document).foundation();
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +30,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    $(document).foundation();
     firebase.auth().onAuthStateChanged(authUser => {
       authUser ? this.setState(() => ({ authUser }))
         : this.setState(() => ({ authUser: null }));

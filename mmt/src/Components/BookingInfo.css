@@ -2,21 +2,25 @@
     justify-content: left;
 }
 
-#buttonsInfo {
+.btn btn-primary {
     --margin-left: 0vmin;
     margin-top: 2vmin;
     font-family: Montserrat;
     font-weight: 500;
     font-size: 30px;
     line-height: 24px;
-    text-align: left;
+    text-align: center;
     color: rgba(0, 0, 0, 0.55);
     width: 7vw;
     height: 10vh;
     border-radius: 12px;
-    background: #fff;
+    background: white;
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.16);
-    
+    border: none;
+}
+
+#buttons{
+    margin-left: 20vmin;
 }
 
 #title {

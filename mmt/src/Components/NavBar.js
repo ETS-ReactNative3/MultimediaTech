@@ -7,7 +7,6 @@ import * as firebase from 'firebase';
 import WorkerHomepage from './WorkerHomepage';
 import $ from 'jquery';
 
-$(document).foundation();
 
 const NavBar = ({ authUser }) =>
     <div>
@@ -106,7 +105,7 @@ const NavAuth = ({ authUser }) =>
                         <Link to={routes.HOMEPAGE} className="nav-link">
                             <button type="button" className="dropdown-item btn btn-danger" id="bt-logout" onClick={() => { firebase.auth().signOut() }}>
                                 LOG OUT
-                        </button>
+                            </button>
                         </Link>
                     </div>
                 </li>

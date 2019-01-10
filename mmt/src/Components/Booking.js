@@ -34,11 +34,12 @@ class Booking extends Component {
         //this.changeTVs = this.changeTVs.bind(this);
         this.renderBookingInfo = this.renderBookingInfo.bind(this);
         //this.functions = this.functions.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
     componentDidMount() {
-        $(document).foundation();
+
     }
 
     renderBookingInfo() {
@@ -54,6 +55,19 @@ class Booking extends Component {
         }
     }
 
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.setState({
+            uFName: event.target.firstName.value,
+            uLName: event.target.lastName.value,
+            uEmail: event.target.email.value,
+            uZip: event.target.zip.value,
+            date: event.target.date.value,
+            
+        })
+        this.renderBookingInfo();
+    }
 
 
     /*functions() {
@@ -90,47 +104,52 @@ class Booking extends Component {
             <div className="Booking">
                 <h1 id="quickInfo"> QUICK INFO</h1>
                 <Moment>{now}</Moment>
-                <form>
+                <div >
                     <div className="grid-container">
                         <div className="grid-x grid-padding-x">
                             <div className="medium-6 cell">
-                                <input id="firstName"
+                                <input name="firstName"
+                                    id="firstName"
                                     className="inputs"
                                     type="text"
                                     placeholder="First Name"
-                                    value={uFName}
+                                    value={this.state.uFName}
                                     onChange={event => this.setState(byPropKey('uFName', event.target.value))}
                                 />
                             </div>
                             <div className="medium-6 cell">
-                                <input id="lastName"
+                                <input name="lastName"
+                                    id="lastName"
                                     className="inputs"
                                     type="text"
                                     placeholder="Last Name"
-                                    value={uLName}
-                                    onChange={booking => this.setState(byPropKey('uLName', booking.target.value))}
+                                    value={this.state.uLName}
+                                onChange={booking => this.setState(byPropKey('uLName', booking.target.value))}
                                 />
                             </div>
                             <div className="medium-6 cell">
-                                <input id="email"
+                                <input name="email"
+                                    id="email"
                                     className="inputs"
                                     type="text"
                                     placeholder="Email"
-                                    value={uEmail}
-                                    onChange={booking => this.setState(byPropKey('uEmail', booking.target.value))}
+                                    value={this.state.uEmail}
+                                onChange={booking => this.setState(byPropKey('uEmail', booking.target.value))}
                                 />
                             </div>
                             <div className="medium-6 cell">
-                                <input id="zip"
+                                <input name="zip"
+                                    id="zip"
                                     className="inputs"
                                     type="text"
                                     placeholder="Zip"
-                                    value={uZip}
+                                    value={this.state.uZip}
                                     onChange={booking => this.setState(byPropKey('uZip', booking.target.value))}
                                 />
                             </div>
                             <div className="medium-6 cell">
-                                <input id="date"
+                                <input name="date"
+                                    id="date"
                                     className="inputs"
                                     type="date"
                                     value={date}
@@ -146,25 +165,36 @@ class Booking extends Component {
                                 </div>
                             </div>
                             <div className="medium-6 cell">
-                                <Link to={routes.BOOKING_INFO}>
-                                    <button id="next" className="hollow button" href="#" onClick={this.renderBookingInfo}>Submit</button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                                {//<Link to={routes.BOOKING_INFO}>
+                                }<button id="next" className="hollow button" href="#" onClick={/*() => {
+                                        if (document.getElementById("inputs").value() === '' || document.getElementById('inputs').value() === 'dd/mm/aaaa') {
+                                            alert("You need to input your information");
+                                        } else {
+                                            this.renderBookingInfo
+                                        }*/
 
-                {console.log("Name: " + this.state.uFName + " " + this.state.uLName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip)}
-                {
-                    this.state.showBookingInfo ? <BookingInfo firstName={this.state.uFName}
-                        lastName={this.state.uLName}
-                        email={this.state.uEmail}
-                        zip={this.state.uZip}
-                        numberTV={this.state.numberTV}
-                        date={this.state.date}
-                    /> : null
-                }
-            </div>
+                                    //this.handleSubmit
+                                this.renderBookingInfo
+
+
+                                }>Submit</button>
+                            {//</Link>
+                            }</div>
+                    </div>
+                    </div>
+                </div>
+
+                { console.log("Name: " + this.state.uFName + " " + this.state.uLName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip) }
+        {
+            this.state.showBookingInfo ? <BookingInfo firstName={this.state.uFName}
+                lastName={this.state.uLName}
+                email={this.state.uEmail}
+                zip={this.state.uZip}
+                numberTV={this.state.numberTV}
+                date={this.state.date}
+            /> : null
+        }
+            </div >
         );
     }
 }

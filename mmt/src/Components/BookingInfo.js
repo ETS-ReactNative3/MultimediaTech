@@ -5,6 +5,9 @@ import * as firebase from 'firebase';
 import 'moment-timezone';
 import './BookingInfo.css';
 
+import MapContainer from "./GoogleMapsContainer";
+
+
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
@@ -60,9 +63,9 @@ class BookingInfo extends Component {
         alert("add");
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         //BookingInfoState();
-        this.setState({
+        await this.setState({
             fName: this.props.firstName,
             lName: this.props.lastName,
             uEmail: this.props.email,
@@ -70,6 +73,7 @@ class BookingInfo extends Component {
             numberTV: this.props.numberTV,
             date: this.props.date,
         })
+        console.log("Component did mount");
         console.log("Name: " + this.state.fName + " " + this.state.lName + "\nEmail: " + this.state.uEmail + "\nZip: " + this.state.uZip);
     }
 
@@ -86,50 +90,7 @@ class BookingInfo extends Component {
         }
     }
 
-    /*calculator() {
-        alert("calc");
-        console.log("state size " + this.state.size);
-        console.log("state takendown " + this.state.takenDown);
-
-
-        if (this.state.size == "33\" - 44\"") {
-            this.setState(byPropKey('price', this.state.price + 40));
-            console.log("Price if 33: " + this.state.price);
-
-        } else if (this.state.size == "45\" or larger") {
-            this.setState(byPropKey('price', this.state.price + 80));
-            console.log("Price: if 45" + this.state.price);
-
-        }//End size
-
-        if (this.state.takenDown == "yes") {
-            this.setState(byPropKey('price', this.state.price + 60));
-            console.log("Price if takendown yes: " + this.state.price);
-
-        } //End taken down
-
-        if (this.state.wallMount === "fixed") {
-            this.setState(byPropKey('price', this.state.price + 30));
-        } else if (this.state.wallMount === "tilting") {
-            this.setState(byPropKey('price', this.state.price + 40));
-        } else if (this.state.wallMount === "full motion") {
-            this.setState(byPropKey('price', this.state.price + 50));
-        }//End wall mount
-
-        if (this.state.wallType === "Brick or concrete") {
-            this.setState(byPropKey('price', this.state.price + 35));
-        } //End wall type
-
-        if (this.state.cords === "bundle \& cover") {
-            this.setState(byPropKey('price', this.state.price + 30));
-        }//End cords
-
-        if (this.state.externalDevices === "one or more devices") {
-            this.setState(byPropKey('price', this.state.price + 15));
-        }//End external devices
-        console.log("Price: " + this.state.price);
-        //this.renderReceipt();
-    }*/
+  
 
     reDraw() {
         document.getElementById("receiptDiv").innerHTML = "";
@@ -141,12 +102,37 @@ class BookingInfo extends Component {
         var header = document.createElement('div');
         header.className = "card-divider";
         var h = document.createElement('h4');
-        h.appendChild(document.createTextNode("Dynamic Price"));
+        h.appendChild(document.createTextNode("SUMMARY"));
         header.appendChild(h);
         var cardSection = document.createElement('div');
+
         var yourP = document.createElement('p');
-        yourP.appendChild(document.createTextNode("Current price: " + price));
+        yourP.appendChild(document.createTextNode("Current price: $" + price));
+
+        var size = document.createElement('p');
+        size.appendChild(document.createTextNode("Size: " + this.state.size));
+
+        var wall = document.createElement('p');
+        wall.appendChild(document.createTextNode("Wall Mount: " + this.state.wallMount));
+        
+        var cords = document.createElement('p');
+        cords.appendChild(document.createTextNode("Cords: " + this.state.cords));
+
+        var takenDown = document.createElement('p');
+        takenDown.appendChild(document.createTextNode("Take down: " + this.state.takenDown));
+        
+        var wallType = document.createElement('p');
+        wallType.appendChild(document.createTextNode("Wall Type: " + this.state.wallType));
+
+
         cardSection.appendChild(yourP);
+        cardSection.appendChild(size);
+        cardSection.appendChild(wall);
+        cardSection.appendChild(cords);
+        cardSection.appendChild(takenDown);
+        cardSection.appendChild(wallType);
+
+
         var button = document.createElement('button');
         button.className = "hollow button";
         //button.setAttribute("onClick", );
@@ -160,7 +146,7 @@ class BookingInfo extends Component {
         price = 80;
     }
 
-    calculator() {
+    async calculator() {
         if (this.state.size === "33\" - 44\"") {
             price += 40;
         } else if (this.state.size === "45\" or larger") {
@@ -190,7 +176,7 @@ class BookingInfo extends Component {
         if (this.state.externalDevices === "one or more devices") {
             price += 15;
         }
-        this.setState({
+        await this.setState({
             price: price
         });
 
@@ -203,8 +189,19 @@ class BookingInfo extends Component {
 
 
 
+
     render() {
+        const style = {
+            /*width: '50vw',
+            height: '75vh',*/
+            width: '10vw',
+            height: '25vh',
+            'marginLeft': 'auto',
+            'marginRight': 'auto'
+        }
+
         return (
+
             <div>
                 <h4 id="title">TV Mounting</h4>
                 <div className="grid-container" id='grid'>
@@ -213,10 +210,46 @@ class BookingInfo extends Component {
                         <div id="cell" className="cell small-6">
                             <label id="subs">How large is your TV?
                             <br></br>
-                                <div className="button-group">
-                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('size', "Up to 32\""))}>Up to 32"</a>
-                                    <a id="buttonsInfo" className="button 33" price="40" onClick={booking => this.setState(byPropKey('size', "33\" - 44\""))}>33" - 44"</a>
-                                    <a id="buttonsInfo" className="button 45" price="80" onClick={booking => this.setState(byPropKey('size', "45\" or larger"))}>45" or larger</a>
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <a type="button" id="buttons32" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="0" onClick={async booking => {
+                                            {/*$('#buttons32').click(function (e) {
+                                                $('#buttons32').css("background", "#373DEE")
+                                                $('#buttons33').removeClass('active')
+                                                $('#buttons33').css("background", "white");
+                                                $('#buttons45').removeClass('active')
+                                                $('#buttons45').css("background", "white");
+                                            });*/}
+                                            await this.setState(byPropKey('size', "Up to 32\""));
+                                            console.log(this.state.size);
+                                            this.calculator()
+                                        }}>Up to 32"</a>
+                                    <a type="button" id="buttons33" className="btn btn-primary 33" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="40" onClick={async booking => {
+                                            {/*$('#buttons33').click(function (e) {
+                                                $('#buttons33').css("background", "#373DEE")
+                                                $('#buttons32').removeClass('active')
+                                                $('#buttons32').css("background", "white");
+                                                $('#buttons45').removeClass('active')
+                                                $('#buttons45').css("background", "white");
+                                            });*/}
+                                            await this.setState(byPropKey('size', "33\" - 44\""));
+                                            console.log(this.state.size);
+                                            this.calculator()
+                                        }}>33" - 44"</a>
+                                    <a type="button" id="buttons45" className="btn btn-primary 45" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="80" onClick={async booking => {
+                                            {/*$('#buttons45').click(function (e) {
+                                                $('#buttons45').css("background", "#373DEE")
+                                                $('#buttons32').removeClass('active')
+                                                $('#buttons32').css("background", "#white")
+                                                $('#buttons33').removeClass('active')
+                                                $('#buttons33').css("background", "#white")
+                                            });*/}
+                                            await this.setState(byPropKey('size', "45\" or larger"));
+                                            console.log(this.state.size);
+                                            this.calculator()
+                                        }}>45" or larger</a>
                                 </div>
                             </label>
                         </div>
@@ -224,8 +257,22 @@ class BookingInfo extends Component {
                             <label id="subs">Does your TV needs to be taken down?
                             <br></br>
                                 <div className="button-group">
-                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('takenDown', "no"))}>No</a>
-                                    <a id="buttonsInfo" className="button taken yes" price="60" onClick={booking => this.setState(byPropKey('takenDown', "yes"))}>Yes</a>
+                                    <a type="button" id="buttonsTNo" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="0" onClick={async booking => {
+                                            await this.setState(byPropKey('takenDown', "no"));
+                                            {/*$('#buttonsTNo').click(function (e) {
+                                                $('#buttonsTYes').removeClass('active')
+                                            });*/}
+                                            this.calculator()
+                                        }}>No</a>
+                                    <a type="button" id="buttonsTYes" className="btn btn-primary taken yes" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="60" onClick={async booking => {
+                                            await this.setState(byPropKey('takenDown', "yes"));
+                                            {/*$('#buttonsTYes').click(function (e) {
+                                                $('#buttonsTNo').removeClass('active')
+                                            });*/}
+                                            this.calculator()
+                                        }}>Yes</a>
                                 </div>
                             </label>
                         </div>
@@ -233,10 +280,46 @@ class BookingInfo extends Component {
                             <label id="subs">Do you need a wall mount for your TV?
                             <br></br>
                                 <div className="button-group">
-                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('wallMount', "no"))}>I already have one</a>
-                                    <a id="buttonsInfo" className="button" price="30" onClick={booking => this.setState(byPropKey('wallMount', "fixed"))}>Fixed</a>
-                                    <a id="buttonsInfo" className="button" price="40" onClick={booking => this.setState(byPropKey('wallMount', "tilting"))}>Tilting</a>
-                                    <a id="buttonsInfo" className="button" price="50" onClick={booking => this.setState(byPropKey('wallMount', "full motion"))}>Full Motion</a>
+                                    <a type="button" id="buttonsOwn" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="0" onClick={async booking => {
+                                            await this.setState(byPropKey('wallMount', "no"));
+                                            this.calculator()
+                                            {/*$('#buttonsOwn').click(function (e) {
+                                                $('#buttonsFixed').removeClass('active')
+                                                $('#buttonsTilting').removeClass('active')
+                                                $('#buttonsFull').removeClass('active')
+                                            });*/}
+                                        }}>Already own one</a>
+                                    <a type="button" id="buttonsFixed" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="30" onClick={async booking => {
+                                            await this.setState(byPropKey('wallMount', "fixed"));
+                                            this.calculator()
+                                            {/*$('#buttonsFixed').click(function (e) {
+                                                $('#buttonsOwn').removeClass('active')
+                                                $('#buttonsTilting').removeClass('active')
+                                                $('#buttonsFull').removeClass('active')
+                                            });*/}
+                                        }}>Fixed</a>
+                                    <a type="button" id="buttonsTilting" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="40" onClick={async booking => {
+                                            await this.setState(byPropKey('wallMount', "tilting"));
+                                            this.calculator()
+                                            {/*$('#buttonsTilting').click(function (e) {
+                                                $('#buttonsFixed').removeClass('active')
+                                                $('#buttonsOwn').removeClass('active')
+                                                $('#buttonsFull').removeClass('active')
+                                            });*/}
+                                        }}>Tilting</a>
+                                    <a type="button" id="buttonsFull" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="50" onClick={async booking => {
+                                            await this.setState(byPropKey('wallMount', "full motion"));
+                                            this.calculator()
+                                            {/*$('#buttonsFull').click(function (e) {
+                                                $('#buttonsFixed').removeClass('active')
+                                                $('#buttonsTilting').removeClass('active')
+                                                $('#buttonsOwn').removeClass('active')
+                                            });*/}
+                                        }}>Full Motion</a>
                                 </div>
                             </label>
                         </div>
@@ -244,28 +327,89 @@ class BookingInfo extends Component {
                             <label id="subs">What type of wall will your TV be mounted on?
                             <br></br>
                                 <div className="button-group">
-                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('wallType', "Drywall, Plaster or Wood"))}>Drywall, Plaster, or Wood</a>
-                                    <a id="buttonsInfo" className="button" price="35" onClick={booking => this.setState(byPropKey('wallType', "Brick or concrete"))}>Brick or Concrete</a>
-                                    <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('wallType', "Doesn't know"))}>I don't know</a>
+                                    <a type="button" id="buttonsDrywall" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="0" onClick={async booking => {
+                                            await this.setState(byPropKey('wallType', "Drywall, Plaster or Wood"));
+                                            this.calculator()
+                                            {/*$('#buttonsDrywall').click(function (e) {
+                                                $('#buttonsBrick').removeClass('active')
+                                                $('#buttonsDont').removeClass('active')
+                                            });*/}
+                                        }}>Drywall, Plaster, or Wood</a>
+                                    <a type="button" id="buttonsBrick" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="35" onClick={async booking => {
+                                            await this.setState(byPropKey('wallType', "Brick or concrete"));
+                                            this.calculator()
+                                            {/*$('#buttonsBrick').click(function (e) {
+                                                $('#buttonsDrywall').removeClass('active')
+                                                $('#buttonsDont').removeClass('active')
+                                            });*/}
+                                        }}>Brick or Concrete</a>
+                                    <a type="button" id="buttonsDont" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                        price="0" onClick={async booking => {
+                                            await this.setState(byPropKey('wallType', "Doesn't know"));
+                                            this.calculator()
+                                            {/*$('#buttonsDont').click(function (e) {
+                                                $('#buttonsBrick').removeClass('active')
+                                                $('#buttonsDrywall').removeClass('active')
+                                            });*/}
+                                        }}>I don't know</a>
                                 </div>
                             </label>
                         </div>
                         <label id="subs">How should we handle the cords?
                             <br></br>
                             <div className="button-group">
-                                <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('cords', "as is"))}>Leave as is</a>
-                                <a id="buttonsInfo" className="button" price="30" onClick={booking => this.setState(byPropKey('cords', "bundle \& cover"))}>Bundle & Conver</a>
+                                <a type="button" id="buttonsAsIs" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                    price="0" onClick={async booking => {
+                                        await this.setState(byPropKey('cords', "as is"));
+                                        this.calculator()
+                                        {/*$('#buttonsAsIs').click(function (e) {
+                                            $('#buttonsBundle').removeClass('active')
+                                        });*/}
+                                    }}>Leave as is</a>
+                                <a type="button" id="buttonsBundle" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                    price="30" onClick={async booking => {
+                                        await this.setState(byPropKey('cords', "bundle \& cover"));
+                                        this.calculator()
+                                        {/*$('#buttonsBundle').click(function (e) {
+                                            $('#buttonsAsIs').removeClass('active')
+                                        });*/}
+                                    }}>Bundle & Conver</a>
                             </div>
                         </label>
                         <label id="subs">Do you have external devices to connect?
                             <br></br>
                             <div className="button-group">
-                                <a id="buttonsInfo" className="button" price="0" onClick={booking => this.setState(byPropKey('externalDevices', "no"))}>No devices</a>
-                                <a id="buttonsInfo" className="button" price="15" onClick={booking => this.setState(byPropKey('externalDevices', "one or more devices"))}>One or more devices</a>
+                                <a type="button" id="buttonsExtNo" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                    price="0" onClick={async booking => {
+                                        await this.setState(byPropKey('externalDevices', "no"));
+                                        this.calculator()
+                                        {/*$('#buttonsExtNo').click(function (e) {
+                                            $('#buttonsExtYes').removeClass('active')
+                                        });*/}
+                                    }}>No devices</a>
+                                <a type="button" id="buttonsExtYes" className="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
+                                    price="15" onClick={async booking => {
+                                        await this.setState(byPropKey('externalDevices', "one or more devices"));
+                                        this.calculator()
+                                        {/*$('#buttonsExtYes').click(function (e) {
+                                            $('#buttonsExtNo').removeClass('active')
+                                        });*/}
+                                    }}>One or more devices</a>
                             </div>
                         </label>
-                        <button className="hollow button" href="#" onClick={this.calculator}>Calculator</button>
-                        <button className="hollow button" href="#" onClick={this.addBooking}>Book</button>
+                        <div className="card" style={style}>
+                            <MapContainer center={{
+                                lat: 28.417955,
+                                lng: -81.581255
+                            }} />
+                        </div>
+                        <br />
+                        <div className="buttons">
+                            {/*<button className="btn btn-primary" href="#" onClick={this.calculator}>Calculator</button>*/}
+                            <button className="btn btn-primary" href="#" onClick={this.addBooking}>Book</button>
+                        </div>
                         <div className="cell medium-6 large-4" id="receiptDiv">
                             {/*<Receipt price={this.state.price}/>*/}
                         </div>

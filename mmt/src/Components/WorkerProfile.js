@@ -116,7 +116,7 @@ class WorkerProfile extends Component {
                                     type="text"
                                     placeholder="Service"
                                     value={serviceType}
-                                    onChange={booking => this.setState(byPropKey('uZip', booking.target.value))}
+                                    onChange={booking => this.setState(byPropKey('serviceType', booking.target.value))}
                                 />
                             </label>
                             <label>Email
